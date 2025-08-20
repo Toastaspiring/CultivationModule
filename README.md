@@ -1,89 +1,94 @@
-# Generic Cultivation Game Template for Roblox
+# Cultivation Game Template for Roblox
 
-## 🌟 Overview
+## Overview
 
-Welcome to the Generic Cultivation Game Template! This Roblox Studio project provides a flexible and powerful foundation for creating your own Chinese cultivation (Xianxia) or martial arts game. The systems are designed to be highly customizable, allowing you to focus on your game's unique story, world, and mechanics without starting from scratch.
+The Cultivation Game Template provides a robust and flexible foundation for creating Roblox games inspired by Chinese cultivation (Xianxia) or martial arts themes.  
+This project includes modular systems that are fully customizable, allowing developers to focus on building unique stories, mechanics, and environments without starting from scratch.  
 
-The core of this template is the `GameConstants.lua` file, which acts as a central configuration hub for almost every aspect of the game.
+The template is data-driven. All core configuration is centralized in `GameConstants.lua`, enabling broad design changes without modifying system logic.
 
-## 📁 Project Structure
+---
 
-This project is organized for use with Rojo, a tool that allows you to use professional development tools for Roblox projects. The source code is located in the `src` directory.
+## Project Structure
+
+This project is configured for use with [Rojo](https://rojo.space), a development tool that integrates professional workflows into Roblox Studio.
 
 ```
 CultivationGameTemplate/
 ├── src/
-│   ├── server/                  # Core server-side systems
-│   │   ├── ServerMain.lua         -- Main server launcher (Script)
-│   │   ├── ...
-│   │
-│   ├── client/                  # Client-side logic and UI
-│   │   ├── ClientMain.lua         -- Main client launcher (LocalScript)
+│   ├── server/                     # Server-side systems
+│   │   ├── ServerMain.lua            -- Main server entry point
 │   │   └── ...
 │   │
-│   └── shared/                  # Code shared between client and server
-│       ├── GameConstants.lua      -- ⭐ YOUR PRIMARY CONFIGURATION FILE ⭐
-│       └── RemoteEvents.lua       -- Handles client-server communication
+│   ├── client/                     # Client-side systems and UI
+│   │   ├── ClientMain.lua            -- Main client entry point
+│   │   └── ...
+│   │
+│   └── shared/                     # Shared modules
+│       ├── GameConstants.lua         -- Core configuration file
+│       └── RemoteEvents.lua          -- Client-server communication
 │
-└── default.project.json         # Rojo project file
+└── default.project.json            # Rojo project configuration
 ```
 
-## 🚀 Getting Started: Customizing Your Game
+---
 
-The most important file for you to edit is `src/shared/GameConstants.lua`. This file contains all the core data and balance settings for your game.
+## Getting Started
 
-### Step 1: Define Progression Paths
+### Step 1: Install Tools
+- Install [Aftman](https://github.com/LPGhatguy/aftman)  
+- Install [Rojo](https://rojo.space/docs/v7/getting-started/installation/)  
 
-Open `src/shared/GameConstants.lua` and find the `PROGRESSION_PATHS` table. Here you can:
-- Define the names of your cultivation or martial arts paths (e.g., "Immortal Path", "Way of the Sword").
-- Add, remove, or rename the realms/levels for each path.
-- Set the `lifespan` and `maxResource` for each realm.
+This project is pre-configured for Rojo 7.
 
-### Step 2: Configure Talents and Traits
+### Step 2: Sync with Roblox Studio
+1. Open Roblox Studio and load your place file.  
+2. From the project root, run:
+   ```powershell
+   rojo serve
+   ```
+3. In Studio, open **Plugins > Rojo > Connect** to synchronize source files.
 
-In the `TALENTS` and `BLOODLINES` tables, you can:
-- Define different tiers of talent for your progression paths.
-- Create unique bloodlines with custom bonuses and restrictions.
+### Step 3: Enable API Services
+- In Studio, go to **Game Settings > Security**.  
+- Enable **Allow HTTP Requests**.  
+- Enable **Enable Studio Access to API Services** (required for DataStores).
 
-### Step 3: Customize Items and Resources
+### Step 4: Test
+- Click **Play** in Studio.  
+- Use the Output window to verify initialization.
 
-In the `RESOURCES` and `ITEMS` tables, you can:
-- Rename primary resources like "Qi" and "Spirit Stones".
-- Create your own herbs, pills, and other items with custom effects and crafting recipes.
+---
 
-### Step 4: Balance Game Systems
+## Customization
 
-The `GAME SYSTEMS CONFIGURATION` section allows you to fine-tune the mechanics:
-- **`CULTIVATION`**: Adjust the speed and efficiency of training, set time-of-day bonuses.
-- **`MARTIAL_ARTS`**: Configure the secondary progression path's training mechanics.
-- **`PROGRESSION`**: Change experience requirements and breakthrough chances.
-- **`TRIBULATIONS`**: Customize the difficulty and rewards of breakthrough challenges.
-- **`WORLD_NODES`**: Define the locations and bonuses of resource hotspots in your world.
-- **`SECTS`**, **`WORLD_EVENTS`**, **`ECONOMY`**, **`PVP`**: Configure all other aspects of your game.
+### GameConstants.lua
+The `GameConstants.lua` file defines most aspects of gameplay and progression.
 
-### Step 5: Integrate Your Lore
+- **Progression Paths**: Configure cultivation paths, martial arts routes, realms, lifespans, and resource caps.  
+- **Talents and Bloodlines**: Create unique bonuses and restrictions.  
+- **Resources and Items**: Define currencies, crafting materials, and consumables.  
+- **System Balancing**: Adjust cultivation speed, martial training, breakthrough chances, tribulation difficulty, economy, and PVP rules.  
 
-Read the `Documentation/LORE_GUIDE.md` for tips on how to bring your world to life. This includes writing descriptions for your realms, items, and creating a unique history for your game world.
+### Lore Integration
+Refer to `Documentation/LORE_GUIDE.md` for guidance on writing realm descriptions, defining cultural context, and embedding story elements.
 
-## 🔧 Setup in Roblox Studio
+---
 
-This project is designed to be used with Rojo.
+## Technical Notes
 
-1.  **Install Aftman and Rojo**: Follow the instructions on the [Aftman](https://github.com/LPGhatguy/aftman) and [Rojo](https://rojo.space/docs/v7/getting-started/installation/) websites to install the tools. This project is pre-configured to use Rojo 7.
-2.  **Sync to Studio**:
-    -   Open your place in Roblox Studio.
-    -   Start the Rojo server by running `rojo serve` in your terminal at the root of this project.
-    -   In the Roblox Studio Rojo plugin, click "Connect" to sync the files into your game.
-3.  **Enable API Services**:
-    -   Go to `Game Settings > Security`.
-    -   Enable `Allow HTTP Requests`.
-    -   Enable `Enable Studio Access to API Services`. This is required for DataStores to work.
-4.  **Test**: Click "Play" in Studio to test the template. Use the Output window to check for any initialization errors.
+- **Server Logic**: Centralized in `ServerMain.lua`.  
+- **Client Logic**: Managed by `ClientMain.lua`.  
+- **Data-Driven Architecture**: Systems read directly from `GameConstants.lua`, enabling rapid iteration without refactoring core modules.  
 
-## 🎮 How It Works
+---
 
--   **Server-Side Logic**: All major game systems run on the server for security and scalability. `ServerMain.lua` initializes all the system modules.
--   **Client-Side Logic**: `ClientMain.lua` initializes the client-side managers, which handle UI and communication with the server.
--   **Data-Driven Design**: The game systems are designed to pull their configuration from `GameConstants.lua`. This means you can make significant changes to your game without needing to edit the core system scripts.
+## License
 
-Happy developing!
+This template is released under the MIT License. You are free to use, modify, and distribute it in your own projects.
+
+---
+
+## Contributing
+
+Contributions and suggestions are welcome. Please submit issues and pull requests via GitHub.
