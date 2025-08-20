@@ -8,37 +8,33 @@ The core of this template is the `GameConstants.lua` file, which acts as a centr
 
 ## 📁 Project Structure
 
-The project follows standard Roblox conventions:
+This project is organized for use with Rojo, a tool that allows you to use professional development tools for Roblox projects. The source code is located in the `src` directory.
 
 ```
 CultivationGameTemplate/
-├── ServerScriptService/           # Core server-side systems
-│   ├── ServerMain.lua             -- Main server launcher (Script)
-│   ├── GameManager.lua            -- Handles game state and systems
-│   ├── PlayerDataManager.lua      -- Manages player data and persistence
-│   ├── CultivationSystem.lua      -- Manages the primary progression path
-│   └── MartialArtsSystem.lua      -- Manages the secondary progression path
-│
-├── ReplicatedStorage/
-│   └── Shared/
+├── src/
+│   ├── server/                  # Core server-side systems
+│   │   ├── ServerMain.lua         -- Main server launcher (Script)
+│   │   ├── ...
+│   │
+│   ├── client/                  # Client-side logic and UI
+│   │   ├── ClientMain.lua         -- Main client launcher (LocalScript)
+│   │   └── ...
+│   │
+│   └── shared/                  # Code shared between client and server
 │       ├── GameConstants.lua      -- ⭐ YOUR PRIMARY CONFIGURATION FILE ⭐
 │       └── RemoteEvents.lua       -- Handles client-server communication
 │
-├── StarterPlayerScripts/          # Client-side logic and UI
-│   ├── ClientMain.lua             -- Main client launcher (LocalScript)
-│   └── ClientManager.lua          -- Manages client-side systems and UI
-│
-└── Documentation/
-    └── LORE_GUIDE.md              -- A guide to help you integrate your own lore
+└── default.project.json         # Rojo project file
 ```
 
 ## 🚀 Getting Started: Customizing Your Game
 
-The most important file for you to edit is `ReplicatedStorage/Shared/GameConstants.lua`. This file contains all the core data and balance settings for your game.
+The most important file for you to edit is `src/shared/GameConstants.lua`. This file contains all the core data and balance settings for your game.
 
 ### Step 1: Define Progression Paths
 
-Open `GameConstants.lua` and find the `PROGRESSION_PATHS` table. Here you can:
+Open `src/shared/GameConstants.lua` and find the `PROGRESSION_PATHS` table. Here you can:
 - Define the names of your cultivation or martial arts paths (e.g., "Immortal Path", "Way of the Sword").
 - Add, remove, or rename the realms/levels for each path.
 - Set the `lifespan` and `maxResource` for each realm.
@@ -71,12 +67,18 @@ Read the `Documentation/LORE_GUIDE.md` for tips on how to bring your world to li
 
 ## 🔧 Setup in Roblox Studio
 
-1.  **Import the Files**: Copy the folders (`ServerScriptService`, `ReplicatedStorage`, etc.) into your Roblox Studio project.
-2.  **Enable API Services**:
+This project is designed to be used with Rojo.
+
+1.  **Install Aftman and Rojo**: Follow the instructions on the [Aftman](https://github.com/LPGhatguy/aftman) and [Rojo](https://rojo.space/docs/v7/getting-started/installation/) websites to install the tools. This project is pre-configured to use Rojo 7.
+2.  **Sync to Studio**:
+    -   Open your place in Roblox Studio.
+    -   Start the Rojo server by running `rojo serve` in your terminal at the root of this project.
+    -   In the Roblox Studio Rojo plugin, click "Connect" to sync the files into your game.
+3.  **Enable API Services**:
     -   Go to `Game Settings > Security`.
     -   Enable `Allow HTTP Requests`.
     -   Enable `Enable Studio Access to API Services`. This is required for DataStores to work.
-3.  **Test**: Click "Play" in Studio to test the template. Use the Output window to check for any initialization errors.
+4.  **Test**: Click "Play" in Studio to test the template. Use the Output window to check for any initialization errors.
 
 ## 🎮 How It Works
 
