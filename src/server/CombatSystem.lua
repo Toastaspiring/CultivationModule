@@ -9,9 +9,9 @@ local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local Debris = game:GetService("Debris")
 
--- Import shared modules
-local GameConstants = require(ReplicatedStorage.Shared.GameConstants)
-local RemoteEvents = require(ReplicatedStorage.Shared.RemoteEvents)
+-- Import Global modules
+local GameConstants = require(ReplicatedStorage.GameConstants)
+local RemoteEvents = require(ReplicatedStorage.RemoteEvents)
 
 local CombatSystem = {}
 CombatSystem.__index CombatSystem

@@ -54,12 +54,11 @@ StarterPlayerScripts/
 └── UI/ (ModuleScripts) ← UI components
 ```
 
-### Shared Structure:
+### Global Structure:
 ```
 ReplicatedStorage/
-└── Shared/
-    ├── GameConstants.lua (ModuleScript) ← Shared constants
-    └── RemoteEvents.lua (ModuleScript) ← Communication
+├── GameConstants.lua (ModuleScript) ← Global constants
+└── RemoteEvents.lua (ModuleScript) ← Communication
 ```
 
 ## 🔧 Script Creation in Roblox Studio

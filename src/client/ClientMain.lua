@@ -16,10 +16,9 @@ local GuiService = game:GetService("GuiService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Wait for shared modules to load
-local SharedModules = ReplicatedStorage:WaitForChild("Shared")
-local GameConstants = require(SharedModules:WaitForChild("GameConstants"))
-local RemoteEvents = require(SharedModules:WaitForChild("RemoteEvents"))
+-- Wait for Global modules to load
+local GameConstants = require(ReplicatedStorage:WaitForChild("GameConstants"))
+local RemoteEvents = require(ReplicatedStorage:WaitForChild("RemoteEvents"))
 
 -- Require client modules
 local UIManager = require(script.Parent.UI:WaitForChild("UIManager"))

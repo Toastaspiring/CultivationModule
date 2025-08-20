@@ -5,9 +5,9 @@
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
--- Import shared modules
-local GameConstants = require(ReplicatedStorage.Shared.GameConstants)
-local RemoteEvents = require(ReplicatedStorage.Shared.RemoteEvents)
+-- Import Global modules
+local GameConstants = require(ReplicatedStorage.GameConstants)
+local RemoteEvents = require(ReplicatedStorage.RemoteEvents)
 
 local CultivationSystem = {}
 CultivationSystem.__index = CultivationSystem

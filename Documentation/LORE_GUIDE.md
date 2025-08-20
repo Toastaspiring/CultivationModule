@@ -4,7 +4,7 @@ This guide will help you bring your unique cultivation world to life using this 
 
 ## 1. The Foundation: `GameConstants.lua`
 
-Almost all the text that players will see is defined in `ReplicatedStorage/Shared/GameConstants.lua`. As you build your world, you should constantly refer back to this file to update the names and descriptions of your game's elements.
+Almost all the text that players will see is defined in `ReplicatedStorage/GameConstants.lua`. As you build your world, you should constantly refer back to this file to update the names and descriptions of your game's elements.
 
 ### Progression Paths and Realms
 

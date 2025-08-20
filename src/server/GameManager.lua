@@ -105,7 +105,7 @@ function GameManager.InitializePlayer(player)
     end
     
     -- Send to client via RemoteEvents (will be handled by ServerMain)
-    local RemoteEvents = require(ReplicatedStorage:WaitForChild("Shared"):WaitForChild("RemoteEvents"))
+    local RemoteEvents = require(ReplicatedStorage:WaitForChild("RemoteEvents"))
     RemoteEvents.SendToClient(player, "WorldStateUpdate", worldState)
 end
 
@@ -139,7 +139,7 @@ function GameManager.TriggerWorldEvent(event)
     print("🌟 World Event Triggered:", event.name)
     
     -- Notify all players
-    local RemoteEvents = require(ReplicatedStorage:WaitForChild("Shared"):WaitForChild("RemoteEvents"))
+    local RemoteEvents = require(ReplicatedStorage:WaitForChild("RemoteEvents"))
     for _, player in pairs(Players:GetPlayers()) do
         RemoteEvents.SendToClient(player, "WorldEventStarted", {
             name = event.name,
@@ -161,7 +161,7 @@ function GameManager.EndWorldEvent(event)
     print("🌟 World Event Ended:", event.name)
     
     -- Notify all players
-    local RemoteEvents = require(ReplicatedStorage:WaitForChild("Shared"):WaitForChild("RemoteEvents"))
+    local RemoteEvents = require(ReplicatedStorage:WaitForChild("RemoteEvents"))
     for _, player in pairs(Players:GetPlayers()) do
         RemoteEvents.SendToClient(player, "WorldEventEnded", {
             name = event.name,
