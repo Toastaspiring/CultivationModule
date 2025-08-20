@@ -10,6 +10,9 @@
     "ServerScriptService": {
       "Server": {
         "$path": "src/server"
+      },
+      "Tests": {
+        "$path": "tests/TestRunner.spec.lua"
       }
     },
 
@@ -17,6 +20,9 @@
       "StarterPlayerScripts": {
         "Client": {
           "$path": "src/client"
+        },
+        "ClientTests": {
+          "$path": "tests/ClientTestRunner.spec.lua"
         }
       }
     },
