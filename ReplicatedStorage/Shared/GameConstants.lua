@@ -1,274 +1,300 @@
 --[[
     GameConstants.lua
-    Central configuration and constants for the Cultivation Game
-    Shared between client and server for consistency
+    Central configuration and constants for a generic cultivation game template.
+    This file is the primary place to customize your game's content and balance.
+    It is shared between the client and server for consistency.
 ]]
 
 local GameConstants = {}
 
--- Game Version
+--------------------------------------------------------------------------------
+-- GAME INFO
+--------------------------------------------------------------------------------
 GameConstants.VERSION = "1.0.0"
 GameConstants.DATA_VERSION = 1.0
 
--- Realm Definitions
-GameConstants.CULTIVATION_REALMS = {
-    [0] = {name = "Mortal", description = "No cultivation", lifespan = 80, maxQi = 0},
-    [1] = {name = "Qi Gathering", description = "Begin absorbing spiritual energy", lifespan = 120, maxQi = 1000},
-    [2] = {name = "Qi Refining", description = "Refine and purify gathered energy", lifespan = 150, maxQi = 2500},
-    [3] = {name = "Qi Building", description = "Construct energy foundation", lifespan = 300, maxQi = 5000},
-    [4] = {name = "Core Formation", description = "Form spiritual core", lifespan = 600, maxQi = 10000},
-    [5] = {name = "Nascent Soul", description = "Develop spiritual consciousness", lifespan = 1200, maxQi = 25000},
-    [6] = {name = "Heavenly Being", description = "Transcend mortal limitations", lifespan = 2400, maxQi = 50000},
-    [7] = {name = "Four-Axis", description = "Manipulate attraction forces", lifespan = 50000, maxQi = 100000},
-    [8] = {name = "Integration", description = "Integrate with natural laws", lifespan = 100000, maxQi = 250000},
-    [9] = {name = "Star Shattering", description = "Gain power to affect celestial bodies", lifespan = 10000000, maxQi = 500000},
-    [10] = {name = "Sacred Vessel", description = "Become a sacred vessel", lifespan = 10000000000, maxQi = 1000000},
-    [11] = {name = "Entering Nirvana", description = "Approach true immortality", lifespan = math.huge, maxQi = 2500000}
+--------------------------------------------------------------------------------
+-- PROGRESSION PATHS
+-- Define the different progression paths for your game.
+-- You can have one or more paths (e.g., Cultivation, Martial Arts, Demonic Path).
+-- Each path has a series of realms or levels.
+--------------------------------------------------------------------------------
+GameConstants.PROGRESSION_PATHS = {
+    -- Path 1: A typical spiritual energy cultivation path.
+    PATH_1 = {
+        Name = "Cultivation", -- The in-game name for this path.
+        Realms = {
+            [0] = {name = "Mortal", description = "An ordinary person with no special abilities.", lifespan = 80, maxResource = 0},
+            [1] = {name = "Realm 1: Foundation", description = "Begin sensing and absorbing energy.", lifespan = 120, maxResource = 1000},
+            [2] = {name = "Realm 2: Purification", description = "Refine and purify absorbed energy.", lifespan = 150, maxResource = 2500},
+            [3] = {name = "Realm 3: Core Building", description = "Construct a stable energy core.", lifespan = 300, maxResource = 5000},
+            [4] = {name = "Realm 4: Core Formation", description = "Solidify the energy core.", lifespan = 600, maxResource = 10000},
+            [5] = {name = "Realm 5: Soul Development", description = "Develop spiritual consciousness from the core.", lifespan = 1200, maxResource = 25000},
+            [6] = {name = "Realm 6: Transcendence", description = "Transcend mortal limitations.", lifespan = 2400, maxResource = 50000},
+            -- Add as many realms as you need...
+        }
+    },
+    -- Path 2: A body-based or martial arts path.
+    PATH_2 = {
+        Name = "Martial Arts", -- The in-game name for this path.
+        Realms = {
+            [0] = {name = "Untrained", description = "No formal training.", abilities = {}},
+            [1] = {name = "Rank 1: Initiate", description = "Basic techniques.", abilities = {"Basic Combat"}},
+            [2] = {name = "Rank 2: Adept", description = "Proficient practitioner.", abilities = {"Basic Combat", "Internal Energy"}},
+            [3] = {name = "Rank 3: Master", description = "Master of the art.", abilities = {"Basic Combat", "Internal Energy", "Energy Projection"}},
+            [4] = {name = "Rank 4: Grandmaster", description = "Can perceive opponent's intent.", abilities = {"Intent Reading", "Advanced Techniques"}},
+            -- Add as many ranks as you need...
+        }
+    }
 }
 
-GameConstants.MARTIAL_REALMS = {
-    [0] = {name = "Untrained", description = "No martial training", abilities = {}},
-    [1] = {name = "Third Rate", description = "Basic martial techniques", abilities = {"Basic Combat"}},
-    [2] = {name = "Second Rate", description = "Proficient martial artist", abilities = {"Basic Combat", "Internal Energy"}},
-    [3] = {name = "First Rate", description = "Master martial artist", abilities = {"Basic Combat", "Internal Energy", "External Projection"}},
-    [4] = {name = "Peak Master", description = "See intent as colors", abilities = {"Intent Reading", "Basic Gang Qi"}},
-    [5] = {name = "Three Flowers", description = "Master emotional intent", abilities = {"Intent Reading", "Emotion Mastery", "Gang Qi Formation"}},
-    [6] = {name = "Five Energies", description = "Awaken divine consciousness", abilities = {"Intent Reading", "Emotion Mastery", "Gang Qi Formation", "Spirit Root Formation"}},
-    [7] = {name = "Ultimate Pinnacle", description = "Create Gang Spheres", abilities = {"Intent Reading", "Emotion Mastery", "Gang Qi Formation", "Gang Spheres"}},
-    [8] = {name = "First Manifestation", description = "Manifest heart essence", abilities = {"Intent Reading", "Emotion Mastery", "Gang Qi Formation", "Gang Spheres", "Heart Manifestation"}},
-    [9] = {name = "Second Manifestation", description = "Integrate ideals to self", abilities = {"Intent Reading", "Emotion Mastery", "Gang Qi Formation", "Gang Spheres", "Heart Manifestation", "Ideal Integration"}},
-    [10] = {name = "Third Manifestation", description = "Awaken martial arts heart", abilities = {"Intent Reading", "Emotion Mastery", "Gang Qi Formation", "Gang Spheres", "Heart Manifestation", "Ideal Integration", "Living Martial Arts"}}
+--------------------------------------------------------------------------------
+-- TALENTS AND TRAITS
+-- Define inherent player characteristics that affect gameplay.
+--------------------------------------------------------------------------------
+-- TALENTS (e.g., Spirit Roots): Aptitude for a specific progression path.
+GameConstants.TALENTS = {
+    -- This key (e.g., "TALENT_PATH_1") should correspond to a key in PROGRESSION_PATHS.
+    PATH_1 = {
+        Tiers = {
+            None = {name = "None", multiplier = 0, description = "No aptitude for this path."},
+            Low = {name = "Low", multiplier = 1.2, description = "Basic aptitude."},
+            Medium = {name = "Medium", multiplier = 1.5, description = "Good aptitude."},
+            High = {name = "High", multiplier = 2.0, description = "Excellent aptitude."},
+            Legendary = {name = "Legendary", multiplier = 3.0, description = "Once-in-a-generation aptitude."}
+        }
+    }
 }
 
--- Spirit Root Types
-GameConstants.SPIRIT_ROOTS = {
-    None = {multiplier = 0, description = "No spiritual aptitude"},
-    Low = {multiplier = 1.2, description = "Basic spiritual aptitude"},
-    Medium = {multiplier = 1.5, description = "Good spiritual aptitude"},
-    High = {multiplier = 2.0, description = "Excellent spiritual aptitude"},
-    Legendary = {multiplier = 3.0, description = "Legendary spiritual aptitude"}
-}
-
--- Bloodline Types
+-- BLOODLINES: Inherited traits with bonuses and restrictions.
 GameConstants.BLOODLINES = {
     Human = {
-        description = "Standard human bloodline",
+        name = "Human",
+        description = "Standard human bloodline.",
         bonuses = {},
         restrictions = {}
     },
-    BeastBlood = {
-        description = "Descendant of spiritual beasts",
+    Beastkin = {
+        name = "Beastkin",
+        description = "Descendant of powerful beasts.",
         bonuses = {physicalPower = 1.3, earthAffinityBonus = 0.2},
         restrictions = {heavenAffinityPenalty = 0.1}
     },
-    DemonBlood = {
-        description = "Descendant of demons",
-        bonuses = {darkAffinityBonus = 0.3, combatPower = 1.2},
-        restrictions = {lightAffinityPenalty = 0.2}
-    },
-    DragonBlood = {
-        description = "Descendant of dragons",
-        bonuses = {allAffinityBonus = 0.1, lifespan = 1.5, prestige = 2.0},
-        restrictions = {pridePenalty = true}
+    -- Add more bloodlines as needed.
+}
+
+-- SPECIAL ABILITIES (e.g., Emotions for Martial Arts)
+GameConstants.SPECIAL_ABILITIES = {
+    -- This key should correspond to a system (e.g., Martial Arts).
+    PATH_2_ABILITIES = {
+        Joy = {name = "Joy", color = Color3.fromRGB(255, 215, 0), effects = {speed = 1.2, agility = 1.3}},
+        Anger = {name = "Anger", color = Color3.fromRGB(255, 0, 0), effects = {damage = 1.4, aggression = 1.5}},
+        -- Add more abilities as needed.
     }
 }
 
--- Emotion Types for Martial Arts
-GameConstants.EMOTIONS = {
-    Joy = {color = Color3.fromRGB(255, 215, 0), effects = {speed = 1.2, agility = 1.3}},
-    Anger = {color = Color3.fromRGB(255, 0, 0), effects = {damage = 1.4, aggression = 1.5}},
-    Sorrow = {color = Color3.fromRGB(0, 0, 139), effects = {defense = 1.3, endurance = 1.4}},
-    Pleasure = {color = Color3.fromRGB(128, 0, 128), effects = {precision = 1.3, technique = 1.2}},
-    Love = {color = Color3.fromRGB(255, 192, 203), effects = {healing = 1.5, support = 1.4}},
-    Hate = {color = Color3.fromRGB(139, 0, 0), effects = {armorPen = 1.3, critical = 1.4}},
-    Desire = {color = Color3.fromRGB(0, 0, 0), effects = {absorption = 1.3, drain = 1.2}}
-}
-
--- Resource Types
+--------------------------------------------------------------------------------
+-- RESOURCES AND ITEMS
+--------------------------------------------------------------------------------
+-- Define all in-game resources and currencies.
 GameConstants.RESOURCES = {
-    Qi = {
-        name = "Qi",
-        description = "Basic spiritual energy",
-        maxStack = math.huge,
-        category = "Energy"
+    PrimaryEnergy = {name = "Qi", description = "The primary energy for the main cultivation path.", maxStack = math.huge, category = "Energy"},
+    Currency = {name = "Spirit Stones", description = "Crystallized energy used as currency.", maxStack = 999999, category = "Currency"},
+    SectCurrency = {name = "Contribution Points", description = "Points earned through sect activities.", maxStack = 999999, category = "Currency"},
+    SocialCurrency = {name = "Reputation", description = "Standing in the game world.", maxStack = math.huge, category = "Social"}
+}
+
+-- Define all consumable items like herbs and pills.
+GameConstants.ITEMS = {
+    Herbs = {
+        Herb1 = {name = "Spirit Grass", description = "Common herb that slightly increases primary energy.", rarity = "Common", effects = {PrimaryEnergy = 10}, growthTime = 3600},
+        Herb2 = {name = "Blood Lotus", description = "Rare herb that enhances physical strength.", rarity = "Rare", effects = {physicalPower = 0.1, PrimaryEnergy = 50}, growthTime = 21600},
     },
-    SpiritStones = {
-        name = "Spirit Stones",
-        description = "Crystallized spiritual energy",
-        maxStack = 999999,
-        category = "Currency"
-    },
-    ContributionPoints = {
-        name = "Contribution Points",
-        description = "Points earned through sect activities",
-        maxStack = 999999,
-        category = "Currency"
-    },
-    Reputation = {
-        name = "Reputation",
-        description = "Standing in the cultivation world",
-        maxStack = math.huge,
-        category = "Social"
+    Pills = {
+        Pill1 = {name = "Energy Pill", description = "Helps with energy cultivation.", rarity = "Common", effects = {energyGainMultiplier = 1.5, duration = 3600}, ingredients = {"Herb1", "Herb1"}},
+        Pill2 = {name = "Breakthrough Pill", description = "Assists with realm advancement.", rarity = "Rare", effects = {breakthroughChanceBonus = 0.2}, ingredients = {"Herb2", "Herb1", "Herb1"}},
     }
 }
 
--- Herb Types
-GameConstants.HERBS = {
-    SpiritGrass = {
-        name = "Spirit Grass",
-        description = "Common herb that slightly increases qi",
-        rarity = "Common",
-        effects = {qi = 10},
-        growthTime = 3600 -- 1 hour
+--------------------------------------------------------------------------------
+-- GAME SYSTEMS CONFIGURATION
+--------------------------------------------------------------------------------
+
+-- CULTIVATION/TRAINING SYSTEM
+GameConstants.CULTIVATION = {
+    -- Define different types of training/cultivation activities.
+    TYPES = {
+        Meditation = {name = "Meditation", efficiency = 1.0, description = "Basic, stable cultivation."},
+        EnergyGathering = {name = "Energy Gathering", efficiency = 1.2, description = "Faster, but less stable."},
+        Formation = {name = "Formation Training", efficiency = 0.8, description = "Slow, but improves mastery."},
+        Alchemy = {name = "Pill Refining", efficiency = 1.5, description = "Fastest, but requires resources."}
     },
-    BloodLotus = {
-        name = "Blood Lotus",
-        description = "Rare herb that enhances physical strength",
-        rarity = "Rare",
-        effects = {physicalPower = 0.1, qi = 50},
-        growthTime = 21600 -- 6 hours
+    -- Time of day bonuses for cultivation.
+    TIME_BONUSES = {
+        Dawn = {startHour = 5, endHour = 7, multiplier = 1.3},
+        Dusk = {startHour = 17, endHour = 19, multiplier = 1.3},
+        Midnight = {startHour = 23, endHour = 2, multiplier = 1.2}
     },
-    DragonScale = {
-        name = "Dragon Scale Herb",
-        description = "Legendary herb with immense power",
-        rarity = "Legendary",
-        effects = {qi = 500, breakthrough = 0.1},
-        growthTime = 86400 -- 24 hours
+    -- Base gain rates per second.
+    BASE_GAIN_RATES = {
+        ENERGY = 10,
+        PROGRESS = 1
+    },
+    -- Diminishing returns for long sessions (reduces gain over 1 hour).
+    DIMINISHING_RETURNS = {
+        DURATION = 3600, -- seconds
+        MIN_FACTOR = 0.1
+    },
+    -- Penalty for being in a higher realm (makes progression harder).
+    REALM_DIFFICULTY_PENALTY = 0.05 -- Multiplied by realm level.
+}
+
+-- MARTIAL ARTS/TRAINING SYSTEM
+GameConstants.MARTIAL_ARTS = {
+    -- Define different types of training activities for the second progression path.
+    TRAINING_TYPES = {
+        BasicCombat = {name = "Basic Combat", efficiency = 1.0, requiredRealm = 1},
+        IntentTraining = {name = "Intent Training", efficiency = 0.8, requiredRealm = 4},
+        EmotionMastery = {name = "Emotion Mastery", efficiency = 0.6, requiredRealm = 5},
+    },
+    -- Bonus to training efficiency based on the player's martial realm level.
+    REALM_EFFICIENCY_BONUS = 0.1,
+    -- Base rate of progress gain per second during training.
+    BASE_PROGRESS_GAIN = 5,
+    -- Diminishing returns for long training sessions.
+    DIMINISHING_RETURNS = {
+        DURATION = 7200, -- seconds
+        MIN_FACTOR = 0.1
+    },
+    -- Requirements for a player to change their emotion state.
+    EMOTION_MASTERY_REQUIREMENT = {
+        mastery = 10,
+        realm = 5
+    },
+    -- Locations in the world that provide training bonuses.
+    TRAINING_GROUNDS = {
+        {position = Vector3.new(200, 0, 200), radius = 50, bonus = 1.2, type = "Basic"},
+        {position = Vector3.new(-200, 0, 200), radius = 50, bonus = 1.5, type = "Intent"},
     }
 }
 
--- Pill Types
-GameConstants.PILLS = {
-    QiGatheringPill = {
-        name = "Qi Gathering Pill",
-        description = "Helps with qi cultivation",
-        rarity = "Common",
-        effects = {qiGain = 1.5, duration = 3600},
-        ingredients = {"SpiritGrass", "SpiritGrass", "SpiritGrass"}
+-- PROGRESSION SYSTEM
+GameConstants.PROGRESSION = {
+    BASE_EXPERIENCE_REQUIRED = 1000,
+    EXPERIENCE_SCALING = 1.5, -- Required XP = BASE * (SCALING ^ currentLevel)
+    BREAKTHROUGH_BASE_CHANCE = 0.1,
+    BREAKTHROUGH_FAILURE_PENALTY = 0.9, -- Chance multiplies by this on each failure.
+    MAX_DAILY_BREAKTHROUGHS = 3,
+    BREAKTHROUGH_FAILURE_PROGRESS_LOSS = 0.1, -- Lose 10% of progress on failure.
+}
+
+-- TRIBULATION SYSTEM (Challenging events on breakthrough)
+GameConstants.TRIBULATIONS = {
+    TRIGGER_REALM = 4, -- Realm at which tribulations start.
+    BASE_DURATION = 300, -- seconds
+    WAVE_COUNT_MAX = 9,
+    -- Define wave types. The system will cycle through these.
+    WAVE_TYPES = {"Lightning", "Thunder", "Wind", "Fire", "Ice"},
+    -- Reward and penalty multipliers based on the realm level.
+    REWARD_MULTIPLIERS = {
+        ENERGY = 1000,
+        EXPERIENCE = 500,
+        REPUTATION = 100
     },
-    BreakthroughPill = {
-        name = "Breakthrough Pill",
-        description = "Assists with realm advancement",
-        rarity = "Rare",
-        effects = {breakthroughChance = 0.2},
-        ingredients = {"BloodLotus", "SpiritGrass", "SpiritGrass", "SpiritGrass", "SpiritGrass"}
-    },
-    ImmortalityPill = {
-        name = "Immortality Pill",
-        description = "Grants temporary immortality",
-        rarity = "Legendary",
-        effects = {lifespan = 1000, allStats = 2.0},
-        ingredients = {"DragonScale", "BloodLotus", "BloodLotus", "SpiritGrass", "SpiritGrass", "SpiritGrass", "SpiritGrass", "SpiritGrass"}
+    PENALTY_MULTIPLIERS = {
+        ENERGY_LOSS = 0.5, -- Lose 50% of current energy.
+        PROGRESS_LOSS = 0.3 -- Lose 30% of current progress.
     }
 }
 
--- Combat Constants
+-- WORLD NODES (e.g., Spiritual energy hotspots)
+GameConstants.WORLD_NODES = {
+    HARVEST_COOLDOWN = 86400, -- 24 hours
+    BASE_HARVEST_AMOUNT = 100,
+    REALM_HARVEST_MULTIPLIER = 0.2, -- Bonus harvest per realm level.
+    DEPLETED_MESSAGE = "This node is temporarily depleted.",
+    -- Define the locations and properties of nodes in the world.
+    NODE_LOCATIONS = {
+        {position = Vector3.new(0, 0, 0), radius = 100, bonus = 1.5, type = "Balanced"},
+        {position = Vector3.new(500, 0, 500), radius = 80, bonus = 2.0, type = "Fire"},
+        {position = Vector3.new(-500, 0, 500), radius = 80, bonus = 2.0, type = "Water"},
+        -- Add more nodes as needed.
+    }
+}
+
+-- COMBAT SYSTEM
 GameConstants.COMBAT = {
     BASE_DAMAGE = 100,
     CRITICAL_MULTIPLIER = 2.0,
     DODGE_CHANCE_BASE = 0.05,
     BLOCK_CHANCE_BASE = 0.1,
-    INTENT_PREDICTION_WINDOW = 0.5, -- seconds
-    COMBO_TIMEOUT = 2.0, -- seconds
-    MAX_COMBO_LENGTH = 10
 }
 
--- Sect Constants
+-- SECT/FACTION SYSTEM
 GameConstants.SECTS = {
     MIN_MEMBERS_TO_CREATE = 5,
     MAX_MEMBERS_PER_SECT = 1000,
     SECT_WAR_COOLDOWN = 86400, -- 24 hours
-    TERRITORY_CONTROL_RADIUS = 500, -- studs
-    CONTRIBUTION_DECAY_RATE = 0.01 -- per day
 }
 
--- World Event Constants
+-- WORLD EVENTS
 GameConstants.WORLD_EVENTS = {
-    AncientHerbGarden = {
-        duration = 1800, -- 30 minutes
-        spawnChance = 0.1, -- per hour
-        maxParticipants = 50,
-        rewards = {
-            herbs = {"SpiritGrass", "BloodLotus"},
-            spiritStones = {min = 100, max = 1000}
-        }
+    Event1 = {
+        name = "Energy Convergence",
+        type = "cultivation_boost",
+        duration = 3600,
+        cooldown = 86400,
+        spawnChance = 0.1,
+        effect = {cultivation_speed = 1.5},
+        rewards = {}
     },
-    MeteorShower = {
-        duration = 600, -- 10 minutes
-        spawnChance = 0.05, -- per hour
-        rewards = {
-            spiritStones = {min = 500, max = 5000},
-            materials = {"StarIron", "CelestialCrystal"}
-        }
+    Event2 = {
+        name = "Sect War Declaration Period",
+        type = "pvp_event",
+        duration = 7200,
+        cooldown = 172800,
+        spawnChance = 0.05,
+        effect = {sect_war_enabled = true},
+        rewards = {}
     },
-    EnlightenmentOpportunity = {
-        duration = 900, -- 15 minutes
-        spawnChance = 0.2, -- per hour
+    Event3 = {
+        name = "Rare Resource Spawn",
+        type = "resource_event",
+        duration = 1800,
+        cooldown = 43200,
+        spawnChance = 0.2,
+        effect = {rare_resource_multiplier = 3},
         rewards = {
-            experience = {min = 1000, max = 10000},
-            breakthroughChance = 0.1
+            items = {"Herb2"},
+            currency = {min = 100, max = 1000}
         }
     }
 }
 
--- UI Constants
-GameConstants.UI = {
-    FADE_TIME = 0.3,
-    NOTIFICATION_DURATION = 5.0,
-    TOOLTIP_DELAY = 0.5,
-    ANIMATION_SPEED = 0.2,
-    MAX_CHAT_MESSAGES = 100
-}
-
--- Audio Constants
-GameConstants.AUDIO = {
-    MASTER_VOLUME = 0.8,
-    SFX_VOLUME = 0.7,
-    MUSIC_VOLUME = 0.5,
-    AMBIENT_VOLUME = 0.3
-}
-
--- Network Constants
-GameConstants.NETWORK = {
-    MAX_REMOTE_CALLS_PER_MINUTE = 60,
-    DATA_SYNC_INTERVAL = 30, -- seconds
-    HEARTBEAT_INTERVAL = 5, -- seconds
-    TIMEOUT_DURATION = 30 -- seconds
-}
-
--- Progression Constants
-GameConstants.PROGRESSION = {
-    BASE_EXPERIENCE_REQUIRED = 1000,
-    EXPERIENCE_SCALING = 1.5,
-    BREAKTHROUGH_BASE_CHANCE = 0.1,
-    BREAKTHROUGH_FAILURE_PENALTY = 0.9,
-    MAX_DAILY_BREAKTHROUGHS = 3
-}
-
--- Economy Constants
+-- ECONOMY
 GameConstants.ECONOMY = {
-    STARTING_SPIRIT_STONES = 100,
+    STARTING_CURRENCY = 100,
     DAILY_LOGIN_BONUS = 50,
-    SECT_CONTRIBUTION_RATE = 0.1,
     TRADE_TAX_RATE = 0.05,
-    AUCTION_HOUSE_FEE = 0.1
 }
 
--- PvP Constants
+-- PVP
 GameConstants.PVP = {
-    SAFE_ZONE_RADIUS = 200, -- around spawn points
+    SAFE_ZONE_RADIUS = 200,
     PVP_COOLDOWN = 300, -- 5 minutes after combat
     REPUTATION_LOSS_ON_DEATH = 100,
     ITEM_DROP_CHANCE_ON_DEATH = 0.1,
-    SECT_WAR_DURATION = 3600 -- 1 hour
 }
 
--- Utility Functions
-function GameConstants.GetRealmInfo(realmType, level)
-    if realmType == "Cultivation" then
-        return GameConstants.CULTIVATION_REALMS[level]
-    elseif realmType == "Martial" then
-        return GameConstants.MARTIAL_REALMS[level]
+--------------------------------------------------------------------------------
+-- UTILITY FUNCTIONS (These should not need customization)
+--------------------------------------------------------------------------------
+
+function GameConstants.GetRealmInfo(pathName, level)
+    for _, pathData in pairs(GameConstants.PROGRESSION_PATHS) do
+        if pathData.Name == pathName then
+            return pathData.Realms[level]
+        end
     end
     return nil
 end
@@ -277,39 +303,21 @@ function GameConstants.GetExperienceRequired(currentLevel)
     return math.floor(GameConstants.PROGRESSION.BASE_EXPERIENCE_REQUIRED * (GameConstants.PROGRESSION.EXPERIENCE_SCALING ^ currentLevel))
 end
 
-function GameConstants.GetBreakthroughChance(attempts, baseChance)
-    local chance = baseChance or GameConstants.PROGRESSION.BREAKTHROUGH_BASE_CHANCE
-    return math.min(0.95, chance * (GameConstants.PROGRESSION.BREAKTHROUGH_FAILURE_PENALTY ^ attempts))
+function GameConstants.GetBreakthroughChance(attempts)
+    local baseChance = GameConstants.PROGRESSION.BREAKTHROUGH_BASE_CHANCE
+    return math.min(0.95, baseChance * (GameConstants.PROGRESSION.BREAKTHROUGH_FAILURE_PENALTY ^ attempts))
 end
 
-function GameConstants.GetSpiritRootMultiplier(spiritRoot)
-    local rootInfo = GameConstants.SPIRIT_ROOTS[spiritRoot]
-    return rootInfo and rootInfo.multiplier or 1.0
-end
-
-function GameConstants.GetEmotionEffects(emotion)
-    local emotionInfo = GameConstants.EMOTIONS[emotion]
-    return emotionInfo and emotionInfo.effects or {}
-end
-
-function GameConstants.IsValidRealm(realmType, level)
-    if realmType == "Cultivation" then
-        return GameConstants.CULTIVATION_REALMS[level] ~= nil
-    elseif realmType == "Martial" then
-        return GameConstants.MARTIAL_REALMS[level] ~= nil
+function GameConstants.GetTalentMultiplier(pathName, talentName)
+    local pathTalents = GameConstants.TALENTS[pathName]
+    if pathTalents then
+        for _, talentData in pairs(pathTalents.Tiers) do
+            if talentData.name == talentName then
+                return talentData.multiplier
+            end
+        end
     end
-    return false
-end
-
-function GameConstants.GetMaxQi(cultivationLevel)
-    local realmInfo = GameConstants.CULTIVATION_REALMS[cultivationLevel]
-    return realmInfo and realmInfo.maxQi or 0
-end
-
-function GameConstants.GetLifespan(cultivationLevel)
-    local realmInfo = GameConstants.CULTIVATION_REALMS[cultivationLevel]
-    return realmInfo and realmInfo.lifespan or 80
+    return 1.0
 end
 
 return GameConstants
-

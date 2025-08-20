@@ -1,184 +1,87 @@
-# Cultivation Game - Roblox Studio Project (CORRECTED)
+# Generic Cultivation Game Template for Roblox
 
-## 🚨 IMPORTANT: Script Types Fixed
+## 🌟 Overview
 
-This is the **corrected version** of the Cultivation Game project with proper Roblox script types. The original version had all files as ModuleScripts, which cannot execute on their own. This version includes the necessary launcher Scripts and LocalScripts.
+Welcome to the Generic Cultivation Game Template! This Roblox Studio project provides a flexible and powerful foundation for creating your own Chinese cultivation (Xianxia) or martial arts game. The systems are designed to be highly customizable, allowing you to focus on your game's unique story, world, and mechanics without starting from scratch.
 
-## 📁 Correct Project Structure
+The core of this template is the `GameConstants.lua` file, which acts as a central configuration hub for almost every aspect of the game.
+
+## 📁 Project Structure
+
+The project follows standard Roblox conventions:
 
 ```
-CultivationGame/
-├── ServerScriptService/
-│   ├── ServerMain.lua                    ⭐ SCRIPT (Main server launcher)
-│   ├── GameManager.lua                   📦 ModuleScript
-│   ├── PlayerDataManager.lua             📦 ModuleScript
-│   ├── CultivationSystem.lua             📦 ModuleScript
-│   ├── MartialArtsSystem.lua             📦 ModuleScript
-│   ├── SectManager.lua                   📦 ModuleScript
-│   ├── CombatSystem.lua                  📦 ModuleScript
-│   └── ResourceManager.lua               📦 ModuleScript
-├── StarterPlayerScripts/
-│   ├── ClientMain.lua                    ⭐ LOCALSCRIPT (Main client launcher)
-│   ├── ClientManager.lua                 📦 ModuleScript
-│   └── UI/
-│       ├── UIManager.lua                 📦 ModuleScript
-│       ├── PlayerInfoPanel.lua           📦 ModuleScript
-│       ├── ResourceBars.lua              📦 ModuleScript
-│       ├── CultivationInterface.lua      📦 ModuleScript
-│       └── MobileAdapter.lua             📦 ModuleScript
+CultivationGameTemplate/
+├── ServerScriptService/           # Core server-side systems
+│   ├── ServerMain.lua             -- Main server launcher (Script)
+│   ├── GameManager.lua            -- Handles game state and systems
+│   ├── PlayerDataManager.lua      -- Manages player data and persistence
+│   ├── CultivationSystem.lua      -- Manages the primary progression path
+│   └── MartialArtsSystem.lua      -- Manages the secondary progression path
+│
 ├── ReplicatedStorage/
 │   └── Shared/
-│       ├── GameConstants.lua             📦 ModuleScript
-│       └── RemoteEvents.lua              📦 ModuleScript
+│       ├── GameConstants.lua      -- ⭐ YOUR PRIMARY CONFIGURATION FILE ⭐
+│       └── RemoteEvents.lua       -- Handles client-server communication
+│
+├── StarterPlayerScripts/          # Client-side logic and UI
+│   ├── ClientMain.lua             -- Main client launcher (LocalScript)
+│   └── ClientManager.lua          -- Manages client-side systems and UI
+│
 └── Documentation/
-    ├── WorldDescriptions.md
-    ├── ProjectSummary.md
-    └── UI_Design/
+    └── LORE_GUIDE.md              -- A guide to help you integrate your own lore
 ```
 
-## 🔧 Setup Instructions
+## 🚀 Getting Started: Customizing Your Game
 
-### 1. Create New Roblox Place
-1. Open Roblox Studio
-2. Create a new place
-3. Enable "Allow HTTP Requests" in Game Settings > Security
-4. Enable "Enable Studio Access to API Services" in Game Settings > Security
+The most important file for you to edit is `ReplicatedStorage/Shared/GameConstants.lua`. This file contains all the core data and balance settings for your game.
 
-### 2. Import Server-Side Scripts
+### Step 1: Define Progression Paths
 
-**ServerScriptService:**
-1. Create a **Script** (not ModuleScript) named `ServerMain`
-2. Copy the content from `ServerMain.lua`
-3. Create **ModuleScripts** for each system:
-   - `GameManager`
-   - `PlayerDataManager`
-   - `CultivationSystem`
-   - `MartialArtsSystem`
-   - `SectManager`
-   - `CombatSystem`
-   - `ResourceManager`
+Open `GameConstants.lua` and find the `PROGRESSION_PATHS` table. Here you can:
+- Define the names of your cultivation or martial arts paths (e.g., "Immortal Path", "Way of the Sword").
+- Add, remove, or rename the realms/levels for each path.
+- Set the `lifespan` and `maxResource` for each realm.
 
-### 3. Import Client-Side Scripts
+### Step 2: Configure Talents and Traits
 
-**StarterPlayerScripts:**
-1. Create a **LocalScript** (not ModuleScript) named `ClientMain`
-2. Copy the content from `ClientMain.lua`
-3. Create a **ModuleScript** named `ClientManager`
-4. Create a folder named `UI`
-5. Inside the `UI` folder, create **ModuleScripts**:
-   - `UIManager`
-   - `PlayerInfoPanel`
-   - `ResourceBars`
-   - `CultivationInterface`
-   - `MobileAdapter`
+In the `TALENTS` and `BLOODLINES` tables, you can:
+- Define different tiers of talent for your progression paths.
+- Create unique bloodlines with custom bonuses and restrictions.
 
-### 4. Import Shared Modules
+### Step 3: Customize Items and Resources
 
-**ReplicatedStorage:**
-1. Create a folder named `Shared`
-2. Inside `Shared`, create **ModuleScripts**:
-   - `GameConstants`
-   - `RemoteEvents`
+In the `RESOURCES` and `ITEMS` tables, you can:
+- Rename primary resources like "Qi" and "Spirit Stones".
+- Create your own herbs, pills, and other items with custom effects and crafting recipes.
 
-## ⚡ Key Differences from Original
+### Step 4: Balance Game Systems
 
-### What Was Wrong:
-- All files were ModuleScripts
-- No main Scripts/LocalScripts to launch the game
-- Systems couldn't initialize automatically
+The `GAME SYSTEMS CONFIGURATION` section allows you to fine-tune the mechanics:
+- **`CULTIVATION`**: Adjust the speed and efficiency of training, set time-of-day bonuses.
+- **`MARTIAL_ARTS`**: Configure the secondary progression path's training mechanics.
+- **`PROGRESSION`**: Change experience requirements and breakthrough chances.
+- **`TRIBULATIONS`**: Customize the difficulty and rewards of breakthrough challenges.
+- **`WORLD_NODES`**: Define the locations and bonuses of resource hotspots in your world.
+- **`SECTS`**, **`WORLD_EVENTS`**, **`ECONOMY`**, **`PVP`**: Configure all other aspects of your game.
 
-### What's Fixed:
-- ✅ `ServerMain.lua` - **Script** that launches all server systems
-- ✅ `ClientMain.lua` - **LocalScript** that launches all client systems
-- ✅ All ModuleScripts have proper `Initialize()`, `Update()`, and cleanup methods
-- ✅ Proper error handling and debugging support
-- ✅ Mobile device detection and adaptation
+### Step 5: Integrate Your Lore
 
-## 🎮 How It Works Now
+Read the `Documentation/LORE_GUIDE.md` for tips on how to bring your world to life. This includes writing descriptions for your realms, items, and creating a unique history for your game world.
 
-### Server Startup:
-1. `ServerMain` (Script) runs automatically when server starts
-2. Requires and initializes all ModuleScript systems
-3. Sets up player connection handlers
-4. Starts main game loop
+## 🔧 Setup in Roblox Studio
 
-### Client Startup:
-1. `ClientMain` (LocalScript) runs when player joins
-2. Detects device type (mobile/desktop)
-3. Creates appropriate UI
-4. Sets up input handling and remote event listeners
+1.  **Import the Files**: Copy the folders (`ServerScriptService`, `ReplicatedStorage`, etc.) into your Roblox Studio project.
+2.  **Enable API Services**:
+    -   Go to `Game Settings > Security`.
+    -   Enable `Allow HTTP Requests`.
+    -   Enable `Enable Studio Access to API Services`. This is required for DataStores to work.
+3.  **Test**: Click "Play" in Studio to test the template. Use the Output window to check for any initialization errors.
 
-### System Communication:
-- Server systems communicate via ModuleScript methods
-- Client-server communication via RemoteEvents
-- UI updates through event-driven architecture
+## 🎮 How It Works
 
-## 🚀 Testing the Game
+-   **Server-Side Logic**: All major game systems run on the server for security and scalability. `ServerMain.lua` initializes all the system modules.
+-   **Client-Side Logic**: `ClientMain.lua` initializes the client-side managers, which handle UI and communication with the server.
+-   **Data-Driven Design**: The game systems are designed to pull their configuration from `GameConstants.lua`. This means you can make significant changes to your game without needing to edit the core system scripts.
 
-### Single Player Testing:
-1. Click "Play" in Roblox Studio
-2. Check Output window for initialization messages
-3. Should see: "🌟 Cultivation Game Server fully initialized!"
-4. Should see: "🌟 Cultivation Game Client fully initialized!"
-
-### Multiplayer Testing:
-1. Click "Play" with 2+ players
-2. Test sect creation and joining
-3. Test combat system
-4. Test resource gathering
-
-## 🐛 Debugging
-
-### Server Debug Commands:
-```lua
--- In server console
-print(_G.CultivationGameServer.GetServerStats())
-```
-
-### Client Debug Commands:
-```lua
--- In client console
-print(_G.CultivationGameClient.GetClientStats())
-```
-
-### Common Issues:
-
-**"Module not found" errors:**
-- Check that all ModuleScripts are in correct locations
-- Verify folder structure matches exactly
-
-**"RemoteEvent not found" errors:**
-- Ensure ReplicatedStorage/Shared folder exists
-- Check that RemoteEvents ModuleScript is properly placed
-
-**UI not appearing:**
-- Check that ClientMain is a LocalScript (not Script)
-- Verify UI ModuleScripts are in StarterPlayerScripts/UI/
-
-## 📱 Mobile Support
-
-The game automatically detects mobile devices and:
-- Creates touch-friendly UI
-- Enlarges buttons for finger taps
-- Simplifies interface layout
-- Optimizes performance
-
-## 🎯 Next Steps
-
-1. **Test the corrected structure** - Import and test the game
-2. **Customize game balance** - Modify values in GameConstants
-3. **Add custom content** - Create new cultivation techniques, sects, etc.
-4. **Deploy to production** - Publish your game when ready
-
-## 📞 Support
-
-If you encounter issues:
-1. Check the Output window for error messages
-2. Verify all scripts are the correct type (Script vs LocalScript vs ModuleScript)
-3. Ensure folder structure matches exactly
-4. Test with a fresh Roblox place if problems persist
-
----
-
-**This corrected version will actually run in Roblox Studio!** 🎉
-
+Happy developing!
